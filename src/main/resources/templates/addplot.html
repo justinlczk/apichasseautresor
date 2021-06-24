@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(title='Créer un plot :')"></head>
+   <body>
+   <div class="container">
+      <h1 class="my-5">Créer un plot :</h1>
+
+          
+      <form th:action="@{/addPlot}"
+         th:object="${plotForm}" method="POST">
+
+          <div class="mb-3">
+              <label for="titre" class="form-label">Titre :</label>
+              <input class="form-control" id="titre" type="text" th:field="*{titre}"/>
+          </div>
+
+          <div class="mb-3">
+              <label for="description" class="form-label">Description :</label>
+              <input class="form-control" id="description" type="text" th:field="*{description}"/>
+          </div>
+
+          <div class="mb-3">
+              <label for="briqueType" class="form-label">Type de brique :</label>
+              <select class="form-select" id="briqueType" th:field="*{typePlot}">
+                  <option value="">--</option>
+                  <option value="INTERLUDE">Interlude</option>
+                  <option value="QUESTION">Question</option>
+                  <option value="CHOIX_REPONSE">Choix de réponses</option>
+                  <option value="REPONSE_JUSTE">Réponse juste</option>
+                  <option value="REPONSE_FAUSSE">Réponse fausse</option>
+              </select>
+          </div>
+
+          <div class="mb-3">
+              <label for="etape" class="form-label">Type de brique :</label>
+              <select class="form-select" id="etape" th:field="*{etapeId}">
+                  <option th:each="etape : ${etapes}" th:value="${etape.id}"
+                          th:utext="${etape.titre}" />
+              </select>
+          </div>
+
+         <input class="btn btn-primary" type="submit" value="Créer" />
+      </form>
+
+      <!-- Check if errorMessage is not null and not empty -->
+       
+      <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+         ...
+      </div>
+   </div>
+      <script th:replace="footer :: footer"></script>
+   </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(title='Créer une étape :')"></head>
+<body>
+<div class="container">
+    <h1 class="my-5">Créer une étape :</h1>
+
+    <form th:action="@{/addEtape}"
+          th:object="${etapeForm}" method="POST">
+        <div class="mb-3">
+            <label for="titre" class="form-label">Titre :</label>
+            <input class="form-control" id="titre" type="text" th:field="*{titre}"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description :</label>
+            <input class="form-control" id="description" type="text" th:field="*{description}"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="scenario" class="form-label">Scénario :</label>
+            <select class="form-select" id="scenario" th:field="*{scenarioId}">
+                <option th:each="scenario : ${scenarios}" th:value="${scenario.id}"
+                        th:utext="${scenario.titre}"/>
+            </select>
+        </div>
+
+
+
+        <h1 class="my-5">Les plots liées :</h1>
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="plot : ${plots}">
+                    <td th:utext="${plot.titre}">...</td>
+                    <td th:utext="${plot.description}">...</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <input class="btn btn-primary mt-3" type="submit" value="Créer"/>
+    </form>
+
+    <br/>
+
+    <!-- Check if errorMessage is not null and not empty -->
+
+    <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+        ...
+    </div>
+</div>
+<script th:replace="footer :: footer"></script>
+</body>
+</html>

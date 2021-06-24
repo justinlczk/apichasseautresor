@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(title='Créer un scénario :')"></head>
+<body>
+<div class="container">
+    <h1 class="my-5">Le scénario :</h1>
+
+
+    <form th:action="@{/addScenario}"
+          th:object="${scenarioForm}" method="POST">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="mb-3">
+            <label for="titre" class="form-label">Titre :</label>
+            <input class="form-control" id="titre" type="text" th:field="*{titre}"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description :</label>
+            <input class="form-control" id="description" type="text" th:field="*{description}"/>
+        </div>
+        <input class="btn btn-primary" type="submit" th:value="${libelleAction}"/>
+    </form>
+
+    <br/>
+    <h1>Les étapes liées :</h1>
+    <div>
+        <table class="table">
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+            </tr>
+            <tr th:each="etape : ${etapes}">
+                <td th:utext="${etape.titre}">...</td>
+                <td th:utext="${etape.description}">...</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Check if errorMessage is not null and not empty -->
+
+
+    <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+        ...
+    </div>
+
+</div>
+<script th:replace="footer :: footer"></script>
+</body>
+</html>

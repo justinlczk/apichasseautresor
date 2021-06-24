@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(title='Liste des plots')"></head>
+<body>
+<div class="container">
+    <h1 class="my-5">Liste des plots</h1>
+    <a class="btn btn-primary" href="addPlot">Ajouter un plot</a>
+    <div class="my-3">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="plot : ${plots}">
+                <td th:utext="${plot.titre}">...</td>
+                <td th:utext="${plot.description}">...</td>
+            </tr>
+            </tbody>
+
+        </table>
+        <script th:replace="footer :: footer"></script>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(title='Créer une brique')"></head>
+<body>
+<div class="container">
+    <h1 class="my-5">Créer une brique :</h1>
+
+    <form th:action="@{/addBrique}"
+          th:object="${briqueForm}" method="POST">
+
+        <div class="mb-3">
+            <label for="titre" class="form-label">Titre :</label>
+            <input class="form-control" id="titre" type="text" th:field="*{titre}"/>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description :</label>
+            <input class="form-control" id="description" type="text" th:field="*{description}"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="plot" class="form-label">Plot :</label>
+            <select class="form-select" id="plot" th:field="*{plotId}">
+                <option th:each="plot : ${plots}" th:value="${plot.id}"
+                        th:utext="${plot.titre}"/>
+            </select>
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Créer"/>
+    </form>
+
+
+    <!-- Check if errorMessage is not null and not empty -->
+
+    <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+        ...
+    </div>
+</div>
+<script th:replace="footer :: footer"></script>
+</body>
+</html>

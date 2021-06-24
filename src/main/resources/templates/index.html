@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(title='Accueil')"></head>
+<body>
+<div class="container">
+    <h1 class="my-5">Bienvenue</h1>
+    <h2 th:utext="${message}">..!..</h2>
+
+    <a class="btn btn-primary my-3" th:href="@{/scenarioList}">Liste de sc&eacute;narios</a>
+    <a class="btn btn-primary my-3" th:href="@{/etapeList}">Liste d'&eacute;tapes</a>
+    <a class="btn btn-primary my-3" th:href="@{/plotList}">Liste de plots</a>
+    <a class="btn btn-primary my-3" th:href="@{/briqueList}">Liste de briques</a>
+
+
+    <script th:replace="footer :: footer"></script>
+</div>
+</body>
+
+</html>
