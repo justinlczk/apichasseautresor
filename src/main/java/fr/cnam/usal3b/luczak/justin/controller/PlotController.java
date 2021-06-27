@@ -74,6 +74,29 @@ public class PlotController {
             Plot newPlot = new Plot(titre, description);
             // attention au .get() pour récupérer l'objet Scenario avec l'id remplie dans le
             // formulaire
+
+            switch (plotForm.getTypePlot()){
+                case INTERLUDE :
+                    newPlot.setTypePlot(plotForm.getTypePlot());
+                    break;
+
+                case QUESTION :
+                    newPlot.setTypePlot(plotForm.getTypePlot());
+                    break;
+
+                case CHOIX_REPONSE:
+                    newPlot.setTypePlot(plotForm.getTypePlot());
+                    break;
+
+                case REPONSE_JUSTE:
+                    newPlot.setTypePlot(plotForm.getTypePlot());
+                    break;
+
+                case REPONSE_FAUSSE:
+                    newPlot.setTypePlot(plotForm.getTypePlot());
+                    break;
+            }
+
             newPlot.setEtape(etape.get());
             plotRepository.save(newPlot);
 

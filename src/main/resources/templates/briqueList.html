@@ -12,12 +12,14 @@
             <tr>
                 <th>Titre</th>
                 <th>Description</th>
+                <th>Type</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="brique : ${briques}">
                 <td th:utext="${brique.titre}">...</td>
                 <td th:utext="${brique.description}">...</td>
+                <td th:utext="${brique.typeBrique}">...</td>
             </tr>
             </tbody>
         </table>

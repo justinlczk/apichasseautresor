@@ -70,17 +70,19 @@ public class BriqueController {
 
         String titre = briqueForm.getTitre();
         String description = briqueForm.getDescription();
+        String contenu = briqueForm.getContenu();
+
         Optional<Plot> plot = plotRepository.findById(briqueForm.getPlotId());
         if (plot.isPresent() && titre != null && titre.length() > 0 && description != null
-                && description.length() > 0) {
+                && description.length() > 0 && contenu.length() > 0) {
             switch (briqueForm.getTypeBrique()) {
                 case TEXTE:
-                    //String contenu = briqueForm.
                     BriqueTexte newBrique = new BriqueTexte();
                     newBrique.setTitre(titre);
                     newBrique.setDescription(description);
                     newBrique.setPlot(plot.get());
-                    //newBrique.setContenuHtml(contenu);
+                    newBrique.setTypeBrique(briqueForm.getTypeBrique());
+                    newBrique.setContenuHtml(contenu);
                     briqueTexteService.sauvegarder(newBrique);
                     break;
 

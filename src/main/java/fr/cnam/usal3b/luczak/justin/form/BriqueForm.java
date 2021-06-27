@@ -3,11 +3,18 @@ package fr.cnam.usal3b.luczak.justin.form;
 
 import fr.cnam.usal3b.luczak.justin.model.TypeBriqueEnum;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 public class BriqueForm {
     private String titre;
     private String description;
     private Integer plotId;
+
+    @Enumerated(EnumType.STRING)
     private TypeBriqueEnum typeBrique;
+
+    private String contenu;
 
     public String getTitre() {
         return titre;
@@ -37,5 +44,11 @@ public class BriqueForm {
 
     public void setTypeBrique(TypeBriqueEnum type) {
         this.typeBrique = type;
+    }
+
+    public String getContenu() { return contenu; }
+
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
     }
 }

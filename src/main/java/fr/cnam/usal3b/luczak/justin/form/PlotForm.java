@@ -2,9 +2,14 @@ package fr.cnam.usal3b.luczak.justin.form;
 
 import fr.cnam.usal3b.luczak.justin.model.TypePlotEnum;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 public class PlotForm {
     private String titre;
     private String description;
+
+    @Enumerated(EnumType.STRING)
     private TypePlotEnum typePlot;
     private Integer etapeId;
 

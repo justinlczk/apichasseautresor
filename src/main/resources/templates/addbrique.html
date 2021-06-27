@@ -31,12 +31,17 @@
             <label for="briqueType" class="form-label">Type de brique :</label>
             <select class="form-select" id="briqueType" th:field="*{typeBrique}">
                 <option value="">--</option>
-                <option value="TEXT">Texte</option>
+                <option value="TEXTE">Texte</option>
                 <option value="NFC">NFC</option>
                 <option value="IMAGE">Image</option>
                 <option value="GEOLOC">Géo localisation</option>
                 <option value="VIDEO">Vidéo</option>
             </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="contenu" class="form-label">Contenu :</label>
+            <input class="form-control" id="contenu" type="text" th:field="*{contenu}"/>
         </div>
 
 

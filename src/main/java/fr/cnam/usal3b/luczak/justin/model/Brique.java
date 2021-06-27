@@ -1,11 +1,6 @@
 package fr.cnam.usal3b.luczak.justin.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public class Brique {
@@ -17,6 +12,9 @@ public class Brique {
     protected String titre;
     protected String description;
 
+    @Enumerated(EnumType.STRING)
+    protected TypeBriqueEnum typeBrique;
+
     @ManyToOne
     @JoinColumn(name = "plot_id", nullable = false)
     protected Plot plot;
@@ -24,9 +22,10 @@ public class Brique {
     public Brique() {
     }
 
-    public Brique(String titre, String description) {
+    public Brique(String titre, String description, TypeBriqueEnum type) {
         this.titre = titre;
         this.description = description;
+        this.typeBrique = type;
     }
 
     public String getTitre() {
@@ -51,6 +50,12 @@ public class Brique {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public TypeBriqueEnum getTypeBrique() { return typeBrique; }
+
+    public void setTypeBrique(TypeBriqueEnum type) {
+        this.typeBrique = type;
     }
 
     public Plot getPlot() {
