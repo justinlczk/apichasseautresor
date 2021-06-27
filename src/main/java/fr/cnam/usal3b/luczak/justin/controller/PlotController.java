@@ -43,7 +43,7 @@ public class PlotController {
     public String plotList(Model model) {
 
         Iterable<Plot> plotsDb = plotRepository.findAll();
-        model.addAttribute("plot", plotsDb);
+        model.addAttribute("plots", plotsDb);
 
         return "plotList";
     }
@@ -77,7 +77,7 @@ public class PlotController {
             newPlot.setEtape(etape.get());
             plotRepository.save(newPlot);
 
-            return "redirect:/etapeList";
+            return "redirect:/plotList";
         }
 
         model.addAttribute("errorMessage", errorMessage);

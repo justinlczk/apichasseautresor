@@ -75,10 +75,12 @@ public class BriqueController {
                 && description.length() > 0) {
             switch (briqueForm.getTypeBrique()) {
                 case TEXTE:
+                    //String contenu = briqueForm.
                     BriqueTexte newBrique = new BriqueTexte();
                     newBrique.setTitre(titre);
                     newBrique.setDescription(description);
                     newBrique.setPlot(plot.get());
+                    //newBrique.setContenuHtml(contenu);
                     briqueTexteService.sauvegarder(newBrique);
                     break;
 

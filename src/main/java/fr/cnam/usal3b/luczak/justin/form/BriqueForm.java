@@ -7,7 +7,7 @@ public class BriqueForm {
     private String titre;
     private String description;
     private Integer plotId;
-    private String type;
+    private TypeBriqueEnum typeBrique;
 
     public String getTitre() {
         return titre;
@@ -33,9 +33,9 @@ public class BriqueForm {
         this.plotId = plotId;
     }
 
-    public String getTypeBrique() { return type; }
+    public TypeBriqueEnum getTypeBrique() { return typeBrique; }
 
     public void setTypeBrique(TypeBriqueEnum type) {
-        this.type = type;
+        this.typeBrique = type;
     }
 }

@@ -27,6 +27,20 @@
             </select>
         </div>
 
+        <div class="mb-3">
+            <label for="briqueType" class="form-label">Type de brique :</label>
+            <select class="form-select" id="briqueType" th:field="*{typeBrique}">
+                <option value="">--</option>
+                <option value="TEXT">Texte</option>
+                <option value="NFC">NFC</option>
+                <option value="IMAGE">Image</option>
+                <option value="GEOLOC">Géo localisation</option>
+                <option value="VIDEO">Vidéo</option>
+            </select>
+        </div>
+
+
+
         <input class="btn btn-primary" type="submit" value="Créer"/>
     </form>
 

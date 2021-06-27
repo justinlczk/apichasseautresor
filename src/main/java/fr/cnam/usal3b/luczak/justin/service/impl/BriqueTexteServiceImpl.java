@@ -41,12 +41,13 @@ public class BriqueTexteServiceImpl extends AbstractBriqueServiceImpl<BriqueText
 	@Override
 	public void supprimer(BriqueTexte aSupprimer) {
 		// TODO Auto-generated method stub
-
+		briqueTexteRepository.delete(aSupprimer);
 	}
 
 	@Override
 	public BriqueTexte getUnObjet(Integer identifiant) {
 		// TODO Auto-generated method stub
+		briqueTexteRepository.findById(identifiant);
 		return null;
 	}
 
