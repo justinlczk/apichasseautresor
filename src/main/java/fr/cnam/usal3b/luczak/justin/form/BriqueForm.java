@@ -5,6 +5,7 @@ public class BriqueForm {
     private String titre;
     private String description;
     private Integer plotId;
+    private String type;
 
     public String getTitre() {
         return titre;
@@ -28,5 +29,13 @@ public class BriqueForm {
 
     public void setPlotId(Integer plotId) {
         this.plotId = plotId;
+    }
+
+    public String getTypeBrique() {
+        return type;
+    }
+
+    public void setTypeBrique(String type) {
+        this.type = type;
     }
 }

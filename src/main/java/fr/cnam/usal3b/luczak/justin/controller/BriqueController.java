@@ -10,27 +10,34 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 
 import fr.cnam.usal3b.luczak.justin.form.BriqueForm;
 import fr.cnam.usal3b.luczak.justin.model.Brique;
-import fr.cnam.usal3b.luczak.justin.repository.BriqueRepository;
-
+import fr.cnam.usal3b.luczak.justin.model.BriqueTexte;
 import fr.cnam.usal3b.luczak.justin.model.Plot;
 import fr.cnam.usal3b.luczak.justin.repository.PlotRepository;
+import fr.cnam.usal3b.luczak.justin.service.BriqueService;
+import fr.cnam.usal3b.luczak.justin.service.CommonBriqueService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Controller
 public class BriqueController {
 
-
-    @Autowired
-    private BriqueRepository briqueRepository;
     @Autowired
     private PlotRepository plotRepository;
 
+    @Autowired
+    private CommonBriqueService commonBriqueService;
+
+    @Autowired
+    @Qualifier("briqueTexteServiceImpl")
+    private BriqueService<BriqueTexte> briqueTexteService;
 
     // Injectez (inject) via application.properties.
     @Value("${welcome.message}")
@@ -39,13 +46,11 @@ public class BriqueController {
     @Value("${error.message}")
     private String errorMessage;
 
-
-
     @RequestMapping(value = { "/briqueList" }, method = RequestMethod.GET)
     public String briqueList(Model model) {
 
-        Iterable<Brique> briquesDb = briqueRepository.findAll();
-        model.addAttribute("brique", briquesDb);
+        Iterable<? extends Brique> briquesDb = commonBriqueService.getAllBriques();
+        model.addAttribute("briques", briquesDb);
 
         return "briqueList";
     }
@@ -55,34 +60,38 @@ public class BriqueController {
 
         BriqueForm briqueForm = new BriqueForm();
         model.addAttribute("briqueForm", briqueForm);
-
-        Iterable<Plot> listePlots = plotRepository.findAll();
-        model.addAttribute("plots", listePlots);
+        model.addAttribute("plots", plotRepository.findAll());
 
         return "addBrique";
     }
 
     @RequestMapping(value = { "/addBrique" }, method = RequestMethod.POST)
-    public String saveBrique(Model model, @ModelAttribute("BriqueForm") BriqueForm briqueForm) {
+    public String saveBrique(Model model, @ModelAttribute("briqueForm") BriqueForm briqueForm) {
 
         String titre = briqueForm.getTitre();
         String description = briqueForm.getDescription();
-        // Optionnal est une aide pour traiter la réponse à la requête. Si le scénario
-        // qu'on cherche existe, alors isPresent sera à true. Sinon à false. Evite les
-        // problème de NullPointerException.
         Optional<Plot> plot = plotRepository.findById(briqueForm.getPlotId());
-        if (plot.isPresent() && titre != null && titre.length() > 0 // TODO si vous vous ennuyez : chercher @Valid
-                && description != null && description.length() > 0) {
-            Brique newBrique = new Brique(titre, description);
-            // attention au .get() pour récupérer l'objet Scenario avec l'id remplie dans le
-            // formulaire
-            newBrique.setPlot(plot.get());
-            briqueRepository.save(newBrique);
+        if (plot.isPresent() && titre != null && titre.length() > 0 && description != null
+                && description.length() > 0) {
+            switch (briqueForm.getTypeBrique()) {
+                case TEXTE:
+                    BriqueTexte newBrique = new BriqueTexte();
+                    newBrique.setTitre(titre);
+                    newBrique.setDescription(description);
+                    newBrique.setPlot(plot.get());
+                    briqueTexteService.sauvegarder(newBrique);
+                    break;
 
-            return "redirect:/etapeList";
+                default:
+                    break;
+            }
+
+            return "redirect:/briqueList";
         }
 
         model.addAttribute("errorMessage", errorMessage);
-        return "addbrique";
+        return "addBrique";
     }
+
 }
+
