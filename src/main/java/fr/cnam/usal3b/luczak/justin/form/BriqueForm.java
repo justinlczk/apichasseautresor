@@ -1,6 +1,8 @@
 package fr.cnam.usal3b.luczak.justin.form;
 
 
+import fr.cnam.usal3b.luczak.justin.model.TypeBriqueEnum;
+
 public class BriqueForm {
     private String titre;
     private String description;
@@ -33,14 +35,7 @@ public class BriqueForm {
 
     public String getTypeBrique() { return type; }
 
-    public void setTypeBrique(enum type{ TEXTE, IMAGE }) {
-        switch (type){
-            case TEXTE:
-                this.type = type.TEXTE;
-                break;
-            case IMAGE:
-                this.type = type.IMAGE;
-                break;
-        }
+    public void setTypeBrique(TypeBriqueEnum type) {
+        this.type = type;
     }
 }
