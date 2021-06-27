@@ -5,7 +5,7 @@ public class BriqueForm {
     private String titre;
     private String description;
     private Integer plotId;
-    private enum type {TEXTE, IMAGE };
+    private String type;
 
     public String getTitre() {
         return titre;
@@ -31,11 +31,16 @@ public class BriqueForm {
         this.plotId = plotId;
     }
 
-    public String getTypeBrique() {
-        return type;
-    }
+    public String getTypeBrique() { return type; }
 
-    public void setTypeBrique(String type) {
-        this.type = type;
+    public void setTypeBrique(enum type{ TEXTE, IMAGE }) {
+        switch (type){
+            case TEXTE:
+                this.type = type.TEXTE;
+                break;
+            case IMAGE:
+                this.type = type.IMAGE;
+                break;
+        }
     }
 }
