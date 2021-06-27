@@ -5,7 +5,7 @@ public class BriqueForm {
     private String titre;
     private String description;
     private Integer plotId;
-    private String type;
+    private enum type {TEXTE, IMAGE };
 
     public String getTitre() {
         return titre;
