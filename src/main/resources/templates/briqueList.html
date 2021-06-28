@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <h1 class="my-5">Liste des briques</h1>
-    <a class="btn btn-primary" href="addBrique">Ajouter une étape</a>
+    <a class="btn btn-primary" href="addBrique">Ajouter une brique</a>
 
     <div class="my-3">
         <table class="table">
@@ -13,6 +13,7 @@
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Type</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +21,8 @@
                 <td th:utext="${brique.titre}">...</td>
                 <td th:utext="${brique.description}">...</td>
                 <td th:utext="${brique.typeBrique}">...</td>
+                <td><a class="btn btn-primary"
+                       th:href="@{/deletebrique/(id=${brique.id}, type=${brique.typeBrique})}">Supprimer</a></td>
             </tr>
             </tbody>
         </table>

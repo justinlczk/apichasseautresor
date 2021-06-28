@@ -1,22 +1,16 @@
 package fr.cnam.usal3b.luczak.justin.controller;
 
-import fr.cnam.usal3b.luczak.justin.model.Etape;
-import fr.cnam.usal3b.luczak.justin.model.Scenario;
+import fr.cnam.usal3b.luczak.justin.model.*;
 import fr.cnam.usal3b.luczak.justin.repository.ScenarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 
 import fr.cnam.usal3b.luczak.justin.form.BriqueForm;
-import fr.cnam.usal3b.luczak.justin.model.Brique;
-import fr.cnam.usal3b.luczak.justin.model.BriqueTexte;
-import fr.cnam.usal3b.luczak.justin.model.Plot;
 import fr.cnam.usal3b.luczak.justin.repository.PlotRepository;
 import fr.cnam.usal3b.luczak.justin.service.BriqueService;
 import fr.cnam.usal3b.luczak.justin.service.CommonBriqueService;
@@ -91,6 +85,22 @@ public class BriqueController {
             }
 
             return "redirect:/briqueList";
+        }
+
+        model.addAttribute("errorMessage", errorMessage);
+        return "addBrique";
+    }
+
+    @RequestMapping(value = {"/deletebrique"}, params = { "id", "type" }, method = RequestMethod.GET)
+    public String deleteBrique(@RequestParam("id") Integer id, @RequestParam("type") TypeBriqueEnum type, Model model){
+        switch (type){
+            case TEXTE:
+                Optional<BriqueTexte> briqueTexte = Optional.ofNullable(briqueTexteService.getUnObjet(id));
+                if(briqueTexte.isPresent() && !briqueTexte.isEmpty()){
+                    briqueTexteService.supprimer(briqueTexte.get());
+                    return "redirect:/briqueList";
+                }
+                break;
         }
 
         model.addAttribute("errorMessage", errorMessage);
