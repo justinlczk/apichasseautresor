@@ -12,6 +12,7 @@
                 <th>Titre</th>
                 <th>Description</th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
 
@@ -19,6 +20,8 @@
             <tr th:each="scenario : ${scenarios}">
                 <td th:utext="${scenario.titre}">...</td>
                 <td th:utext="${scenario.description}">...</td>
+                <td><a class="btn btn-primary" href="./addScenario.html"
+                       th:href="@{/showscenario/{id}(id=${scenario.id})}">Voir le scénario</a></td>
                 <td><a class="btn btn-primary" href="./addScenario.html"
                        th:href="@{/updatescenario/{id}(id=${scenario.id})}">Modifier</a></td>
             </tr>

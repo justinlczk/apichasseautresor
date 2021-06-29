@@ -14,7 +14,7 @@ public enum TypeBriqueEnum {
     }
 
     public String getType(){
-        return this.type;
+        return type;
     }
 
 }

@@ -6,11 +6,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 public class PlotForm {
+    @Enumerated(EnumType.STRING)
     private String titre;
     private String description;
-
-    @Enumerated(EnumType.STRING)
     private TypePlotEnum typePlot;
+
     private Integer etapeId;
 
     public String getTitre() {

@@ -105,6 +105,20 @@ public class ScenarioController {
         return "addScenario";
     }
 
+    @RequestMapping(value = {"/showscenario/{id}"}, method = RequestMethod.GET)
+    public String showScenario(@PathVariable("id") Integer id, Model model) {
+        Optional<Scenario> scenario = scenarioRepository.findById(id);
+        if (scenario.isPresent() && !scenario.isEmpty()) {
+            Iterable<Etape> etapesDb = etapeRepository.findByScenario(scenario.get());
+            model.addAttribute("etapes", etapesDb);
+            model.addAttribute("scenario", scenario.get());
+        }
+
+        model.addAttribute("errorMessage", errorMessage);
+        return "showScenario";
+    }
+
+
     @RequestMapping(value = {"/scenarioListJson"}, method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<List<ScenarioJson>> scenarioListJson() {
@@ -124,5 +138,6 @@ public class ScenarioController {
         else
             return ResponseEntity.noContent().build();
     }
+
 
 }

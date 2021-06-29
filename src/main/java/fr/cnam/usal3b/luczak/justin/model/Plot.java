@@ -52,9 +52,10 @@ public class Plot {
     public Plot() {
     }
 
-    public Plot(String titre, String description) {
+    public Plot(String titre, String description, TypePlotEnum typePlot) {
         this.titre = titre;
         this.description = description;
+        this.typePlot = typePlot;
     }
 
     public String getTitre() {

@@ -1,20 +1,23 @@
 package fr.cnam.usal3b.luczak.justin.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import fr.cnam.usal3b.luczak.justin.form.ScenarioForm;
+import fr.cnam.usal3b.luczak.justin.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import fr.cnam.usal3b.luczak.justin.form.EtapeForm;
-import fr.cnam.usal3b.luczak.justin.model.Etape;
 import fr.cnam.usal3b.luczak.justin.repository.EtapeRepository;
 
-import fr.cnam.usal3b.luczak.justin.model.Scenario;
+import fr.cnam.usal3b.luczak.justin.repository.PlotRepository;
+
 import fr.cnam.usal3b.luczak.justin.repository.ScenarioRepository;
 
 
@@ -24,7 +27,10 @@ public class EtapeController {
     @Autowired
     private EtapeRepository etapeRepository;
     @Autowired
+    private PlotRepository plotRepository;
+    @Autowired
     private ScenarioRepository scenarioRepository;
+
 
     // Injectez (inject) via application.properties.
     @Value("${welcome.message}")
@@ -76,6 +82,58 @@ public class EtapeController {
 
         model.addAttribute("errorMessage", errorMessage);
         return "addEtape";
+    }
+
+    @RequestMapping(value = {"/updateetape/{id}"}, method = RequestMethod.GET)
+    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+        Optional<Etape> etape = etapeRepository.findById(id);
+        EtapeForm etapeForm = new EtapeForm();
+        if (etape.isPresent()) {
+
+            etapeForm.setId(etape.get().getId());
+            etapeForm.setTitre(etape.get().getTitre());
+            etapeForm.setDescription(etape.get().getDescription());
+            model.addAttribute("etapeForm", etapeForm);
+            model.addAttribute("libelleAction", "Modifier");
+            Iterable<Plot> plotDb = plotRepository.findByEtape(etape.get());
+            model.addAttribute("plots", plotDb);
+        } else {
+            model.addAttribute("errorMessage", "Pas d'étape avec cet id");
+        }
+        return "addEtape";
+    }
+
+    @RequestMapping(value = {"/showetape/{id}"}, method = RequestMethod.GET)
+    public String showEtape(@PathVariable("id") Integer id, Model model) {
+        Optional<Etape> etape = etapeRepository.findById(id);
+        if (etape.isPresent() && !etape.isEmpty()) {
+            Iterable<Plot> plotsDb = plotRepository.findByEtape(etape.get());
+            model.addAttribute("plots", plotsDb);
+            model.addAttribute("etape", etape.get());
+        }
+
+        model.addAttribute("errorMessage", errorMessage);
+        return "showEtape";
+    }
+
+    @RequestMapping(value = {"/etapeListJson"}, method = RequestMethod.GET)
+    public @ResponseBody
+    ResponseEntity<List<EtapeJson>> etapeListJson() {
+        List<EtapeJson> listeEtapes = new ArrayList<EtapeJson>();
+        for (Etape etape : etapeRepository.findAll()) {
+            listeEtapes.add(new EtapeJson(etape));
+        }
+        return ResponseEntity.ok(listeEtapes);
+    }
+
+    @RequestMapping(value = {"/etapeJson/{id}"}, method = RequestMethod.GET)
+    public @ResponseBody
+    ResponseEntity<EtapeJson> etapeJson(@PathVariable("id") Integer id) {
+        Optional<Etape> etape = etapeRepository.findById(id);
+        if (etape.isPresent())
+            return ResponseEntity.ok(new EtapeJson(etape.get()));
+        else
+            return ResponseEntity.noContent().build();
     }
 
 }

@@ -11,12 +11,14 @@
             <tr>
                 <th>Titre</th>
                 <th>Description</th>
+                <th>Type</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="plot : ${plots}">
                 <td th:utext="${plot.titre}">...</td>
                 <td th:utext="${plot.description}">...</td>
+                <td th:utext="${plot.typePlot}">...</td>
             </tr>
             </tbody>
 

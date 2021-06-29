@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header(title='Scénario')"></head>
+<body>
+<div class="container">
+    <h1 class="my-5">Voir un scénario</h1>
+    <div class="my-3">
+        <h2 class="my-3">Scénario :</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td th:utext="${scenario.titre}">...</td>
+                <td th:utext="${scenario.description}">...</td>
+                <td><a class="btn btn-primary" href="./addScenario.html"
+                       th:href="@{/updatescenario/{id}(id=${scenario.id})}">Modifier</a></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div class="my-5">
+        <h2 class="my-3">Étapes :</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each ="etape : ${etapes}">
+                <td th:utext="${etape.titre}">...</td>
+                <td th:utext="${etape.description}">...</td>
+                <td><a class="btn btn-primary" th:href="@{/showetape/{id}(id=${etape.id})}">Voir l'étape</a></td>
+                <td><a class="btn btn-primary" th:href="@{/updateetape/{id}(id=${etape.id})}">Modifier</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script th:replace="footer :: footer"></script>
+</body>
+</html>

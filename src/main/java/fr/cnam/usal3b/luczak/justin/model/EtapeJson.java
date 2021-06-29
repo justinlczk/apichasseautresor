@@ -1,6 +1,8 @@
 package fr.cnam.usal3b.luczak.justin.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -10,14 +12,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import fr.cnam.usal3b.luczak.justin.model.Etape;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "titre", "description" })
 public class EtapeJson {
 
 	@JsonIgnore
 	private Etape etape;
+
+	@JsonProperty("plots")
+	private List<PlotJson> plots;
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -46,6 +49,20 @@ public class EtapeJson {
 	@JsonProperty("description")
 	public void setDescription(String description) {
 		etape.setDescription(description);
+	}
+
+	@JsonProperty("plots")
+	public List<PlotJson> getPlots() {
+		plots = new ArrayList<PlotJson>();
+		for (Plot plot : etape.getPlots()) {
+			plots.add(new PlotJson(plot));
+		}
+		return plots;
+	}
+
+	@JsonProperty("plots")
+	public void setPlots(List<PlotJson> plots) {
+		this.plots = plots;
 	}
 
 	@JsonAnyGetter
