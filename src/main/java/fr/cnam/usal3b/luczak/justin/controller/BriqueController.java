@@ -104,7 +104,7 @@ public class BriqueController {
         }
 
         model.addAttribute("errorMessage", errorMessage);
-        return "addBrique";
+        return "listBrique";
     }
 
 }

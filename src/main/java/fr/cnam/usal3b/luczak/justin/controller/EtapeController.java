@@ -6,7 +6,9 @@ import java.util.Optional;
 
 import fr.cnam.usal3b.luczak.justin.form.ScenarioForm;
 import fr.cnam.usal3b.luczak.justin.model.*;
+import fr.cnam.usal3b.luczak.justin.service.BriqueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,8 @@ import fr.cnam.usal3b.luczak.justin.repository.PlotRepository;
 
 import fr.cnam.usal3b.luczak.justin.repository.ScenarioRepository;
 
+import fr.cnam.usal3b.luczak.justin.service.EtapeService;
+
 
 @Controller
 public class EtapeController {
@@ -31,6 +35,9 @@ public class EtapeController {
     @Autowired
     private ScenarioRepository scenarioRepository;
 
+    @Autowired
+    private EtapeService etapeService;
+
 
     // Injectez (inject) via application.properties.
     @Value("${welcome.message}")
@@ -39,7 +46,7 @@ public class EtapeController {
     @Value("${error.message}")
     private String errorMessage;
 
-    @RequestMapping(value = { "/etapeList" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/etapeList"}, method = RequestMethod.GET)
     public String etapeList(Model model) {
 
         Iterable<Etape> etapesDb = etapeRepository.findAll();
@@ -48,7 +55,7 @@ public class EtapeController {
         return "etapeList";
     }
 
-    @RequestMapping(value = { "/addEtape" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/addEtape"}, method = RequestMethod.GET)
     public String showAddEtapePage(Model model) {
 
         EtapeForm etapeForm = new EtapeForm();
@@ -60,7 +67,7 @@ public class EtapeController {
         return "addEtape";
     }
 
-    @RequestMapping(value = { "/addEtape" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/addEtape"}, method = RequestMethod.POST)
     public String saveEtape(Model model, @ModelAttribute("etapeForm") EtapeForm etapeForm) {
 
         String titre = etapeForm.getTitre();
@@ -102,6 +109,19 @@ public class EtapeController {
         }
         return "addEtape";
     }
+
+    @RequestMapping(value = {"/deleteetape"}, params = {"id"}, method = RequestMethod.GET)
+    public String deleteEtape(@RequestParam("id") Integer id, Model model) {
+
+        Optional<Etape> etape = Optional.ofNullable(etapeService.getUnObjet(id));
+        if (etape.isPresent() && !etape.isEmpty()) {
+            etapeService.supprimer(etape.get());
+            return "redirect:/briqueList";
+        }
+        model.addAttribute("errorMessage", errorMessage);
+        return "listEtape";
+    }
+
 
     @RequestMapping(value = {"/showetape/{id}"}, method = RequestMethod.GET)
     public String showEtape(@PathVariable("id") Integer id, Model model) {
