@@ -27,8 +27,9 @@
 
 
 
-        <h1 class="my-5">Les plots liées :</h1>
-        <div>
+
+        <div class="plotContent">
+            <h1 class="my-5">Les plots liées :</h1>
             <table class="table">
                 <thead>
                 <tr>
@@ -60,5 +61,12 @@
     </div>
 </div>
 <script th:replace="footer :: footer"></script>
+<script>
+    let tr = document.querySelectorAll('.plotContent table tbody tr')
+
+    if(tr.length <= 0) {
+        document.querySelector('.plotContent').style.display = "none"
+    }
+</script>
 </body>
 </html>

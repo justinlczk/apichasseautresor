@@ -20,7 +20,7 @@
           </div>
 
           <div class="mb-3">
-              <label for="briqueType" class="form-label">Type de brique :</label>
+              <label for="briqueType" class="form-label">Type de plot :</label>
               <select class="form-select" id="briqueType" th:field="*{typePlot}">
                   <option value="">--</option>
                   <option value="INTERLUDE">Interlude</option>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="mb-3">
-              <label for="etape" class="form-label">Type de brique :</label>
+              <label for="etape" class="form-label">Étape liée :</label>
               <select class="form-select" id="etape" th:field="*{etapeId}">
                   <option th:each="etape : ${etapes}" th:value="${etape.id}"
                           th:utext="${etape.titre}" />
